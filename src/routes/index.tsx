@@ -10,13 +10,13 @@ export const Route = createFileRoute("/")({
   loader: () => listPublishedPosts(),
   head: () => ({
     meta: [
-      { title: "0xmfbk — Security Writeups & Research" },
+      { title: "0xmfbk.sec — Writeups" },
       {
         name: "description",
         content:
           "Security writeups, notes, and research by Mustafa Faek Banikhalaf (0xmfbk). Web pentesting, tooling, and defensive analysis.",
       },
-      { property: "og:title", content: "0xmfbk — Security Writeups" },
+      { property: "og:title", content: "0xmfbk.sec — Writeups" },
       {
         property: "og:description",
         content: "Web pentesting, security tooling, and defensive research.",
@@ -43,10 +43,9 @@ function Home() {
           transition={{ duration: 0.5 }}
           className="glass neon-border grid-bg relative overflow-hidden rounded-2xl p-5 sm:p-7"
         >
-          <div className="font-mono text-xs text-muted-foreground sm:text-sm">
-          </div>
+          <div className="font-mono text-xs text-muted-foreground sm:text-sm"></div>
           <h1 className="mt-2 font-mono text-2xl font-bold leading-tight tracking-tight sm:text-3xl md:text-4xl">
-            <span className="text-neon">0xmfbk</span>
+            <span className="text-neon">0xmfbk.sec</span>
             <span className="text-muted-foreground"> :: </span>
             <span>security writeups &amp; research</span>
           </h1>
@@ -80,7 +79,7 @@ function Home() {
           <WriteupsList posts={standard} />
         </section>
         <footer className="border-t border-border/60 pt-6 text-center font-mono text-xs text-muted-foreground">
-          &copy; {new Date().getFullYear()} 0xmfbk · built with{" "}
+          &copy; {new Date().getFullYear()} 0xmfbk.sec · built with{" "}
           <span className="text-neon">&lt;/&gt;</span> and caffeine
         </footer>
       </main>
