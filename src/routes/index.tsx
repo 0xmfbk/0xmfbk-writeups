@@ -10,13 +10,13 @@ export const Route = createFileRoute("/")({
   loader: () => listPublishedPosts(),
   head: () => ({
     meta: [
-      { title: "0xmfbk.sec — Writeups" },
+      { title: "0xmfbk.sec - Writeups" },
       {
         name: "description",
         content:
           "Security writeups, notes, and research by Mustafa Faek Banikhalaf (0xmfbk). Web pentesting, tooling, and defensive analysis.",
       },
-      { property: "og:title", content: "0xmfbk.sec — Writeups" },
+      { property: "og:title", content: "0xmfbk.sec - Writeups" },
       {
         property: "og:description",
         content: "Web pentesting, security tooling, and defensive research.",
