@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { listPublishedPosts } from "@/lib/posts.functions";
 
-const BASE_URL = "";
+const BASE_URL = "https://0xmfbk.netlify.app";
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
@@ -20,14 +20,18 @@ export const Route = createFileRoute("/sitemap.xml")({
           })),
         ];
 
-        const urls = entries.map((e) => [
-          `  <url>`,
-          `    <loc>${BASE_URL}${e.path}</loc>`,
-          "lastmod" in e && e.lastmod ? `    <lastmod>${e.lastmod}</lastmod>` : null,
-          `    <changefreq>${e.changefreq}</changefreq>`,
-          `    <priority>${e.priority}</priority>`,
-          `  </url>`,
-        ].filter(Boolean).join("\n"));
+        const urls = entries.map((e) =>
+          [
+            `  <url>`,
+            `    <loc>${BASE_URL}${e.path}</loc>`,
+            "lastmod" in e && e.lastmod ? `    <lastmod>${e.lastmod}</lastmod>` : null,
+            `    <changefreq>${e.changefreq}</changefreq>`,
+            `    <priority>${e.priority}</priority>`,
+            `  </url>`,
+          ]
+            .filter(Boolean)
+            .join("\n"),
+        );
 
         const xml = [
           `<?xml version="1.0" encoding="UTF-8"?>`,
