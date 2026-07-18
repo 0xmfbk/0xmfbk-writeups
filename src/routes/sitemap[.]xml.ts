@@ -11,6 +11,7 @@ export const Route = createFileRoute("/sitemap.xml")({
         const entries = [
           { path: "/", changefreq: "weekly", priority: "1.0" },
           { path: "/writeups", changefreq: "weekly", priority: "0.9" },
+          { path: "/about", changefreq: "monthly", priority: "0.7" },
           ...posts.map((p) => ({
             path: `/writeups/${p.slug}`,
             lastmod: new Date(p.published_at ?? p.created_at).toISOString(),

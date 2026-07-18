@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Menu, Terminal, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function NavBar() {
   const [open, setOpen] = useState(false);
@@ -46,18 +47,30 @@ export function NavBar() {
           >
             ~/writeups
           </Link>
+          <Link
+            to="/about"
+            className={linkBase}
+            activeProps={{ className: "text-primary bg-primary/10" }}
+          >
+            ~/about
+          </Link>
+          <ThemeToggle className="ml-2" />
         </nav>
 
         {/* Mobile toggle */}
-        <button
-          type="button"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-          className="inline-flex h-12 w-12 items-center justify-center rounded-md border border-border bg-muted/40 font-mono text-neon transition hover:border-primary/60 hover:bg-primary/10 md:hidden"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        {/* Mobile toggles */}
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-muted/40 font-mono text-neon transition hover:border-primary/60 hover:bg-primary/10"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile overlay */}
@@ -101,6 +114,14 @@ export function NavBar() {
                   activeProps={{ className: "text-primary bg-primary/10" }}
                 >
                   ~/writeups
+                </Link>
+                <Link
+                  to="/about"
+                  onClick={() => setOpen(false)}
+                  className="flex min-h-14 items-center rounded-md px-4 text-muted-foreground transition hover:bg-primary/10 hover:text-primary"
+                  activeProps={{ className: "text-primary bg-primary/10" }}
+                >
+                  ~/about
                 </Link>
               </div>
             </motion.nav>

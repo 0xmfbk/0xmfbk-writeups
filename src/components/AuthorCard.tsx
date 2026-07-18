@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import { Github, LinkedinIcon, MailIcon} from "lucide-react";
+import { Github, Globe, LinkedinIcon, MailIcon } from "lucide-react";
 import avatar from "@/assets/avatar1.png";
+
+const PORTFOLIO_URL = "https://mfbk.onrender.com/";
 
 export function AuthorCard() {
   return (
@@ -17,7 +19,7 @@ export function AuthorCard() {
           <img
             src={avatar}
             alt="Mustafa Faek Banikhalaf"
-            className="relative h-50 w-50 rounded-full border-2 border-primary/70 object-cover shadow-neon sm:h-50 sm:w-50 md:h-50 md:w-50"
+            className="relative h-40 w-40 rounded-full border-2 border-primary/70 object-cover shadow-neon sm:h-50 sm:w-50"
           />
         </div>
 
@@ -29,34 +31,43 @@ export function AuthorCard() {
             <span>Cybersecurity Associate · Offensive &amp; Defensive Security</span>
           </p>
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:mx-0">
-            Hands-on experience in web application penetration testing, custom security scripting in{" "}
-            <code>Python</code>, and enterprise log analysis. Bridging offensive and defensive
-            domains with a solid foundation in IT infrastructure.
+            Cybersecurity Associate operating across both offensive and defensive disciplines. Backed by practical experience administering multi-platform Windows and Linux server environments and troubleshooting critical system infrastructure flaws. On the offensive side, I focus on web application penetration testing, mapping attack surfaces, and identifying OWASP Top 10 vulnerabilities. On the defensive side, I leverage my system administration background for infrastructure hardening and threat detection through enterprise log analysis using Splunk. I combine both mindsets to discover technical flaws and implement resilient, real-world security solutions.
           </p>
 
-          <div className="mt-4 grid grid-cols-1 gap-2 sm:flex sm:flex-wrap sm:items-center">
-            
+          <div className="mt-4 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
+            <a
+              href={PORTFOLIO_URL}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Portfolio"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-border bg-muted/40 px-4 py-3 font-mono text-xs transition hover:border-primary/50 hover:text-primary sm:w-auto"
+            >
+              <Globe className="h-4 w-4" /> Portfolio
+            </a>
             <a
               href="https://linkedin.com/in/mustafabanikhalaf"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md border border-border bg-muted/40 px-4 py-3 font-mono text-xs transition hover:border-primary/50 hover:text-primary sm:w-auto"
+              aria-label="LinkedIn"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-border bg-muted/40 px-4 py-3 font-mono text-xs transition hover:border-primary/50 hover:text-primary sm:w-auto"
             >
-              <LinkedinIcon className="h-4 w-4" /> 
+              <LinkedinIcon className="h-4 w-4" />
             </a>
             <a
               href="https://github.com/0xmfbk"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md border border-border bg-muted/40 px-4 py-3 font-mono text-xs transition hover:border-primary/50 hover:text-primary sm:w-auto"
+              aria-label="GitHub"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-border bg-muted/40 px-4 py-3 font-mono text-xs transition hover:border-primary/50 hover:text-primary sm:w-auto"
             >
-              <Github className="h-4 w-4" /> 
+              <Github className="h-4 w-4" />
             </a>
             <a
               href="mailto:mustafabanikhalaf772@gmail.com"
-              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md border border-border bg-muted/40 px-4 py-3 font-mono text-xs transition hover:border-primary/50 hover:text-primary sm:w-auto"
+              aria-label="Email"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-border bg-muted/40 px-4 py-3 font-mono text-xs transition hover:border-primary/50 hover:text-primary sm:w-auto"
             >
-              <MailIcon className="h-4 w-4" /> 
+              <MailIcon className="h-4 w-4" />
             </a>
           </div>
         </div>

@@ -10,6 +10,8 @@ export type WriteupSummary = {
   tags: string[];
   cover_image_url?: string | null;
   created_at: string;
+  is_pinned?: boolean;
+  published_at?: string | null;
 };
 
 function estimateReadTime(text: string | null) {
@@ -37,8 +39,14 @@ export function WriteupCard({ post, index = 0 }: { post: WriteupSummary; index?:
         <div className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-neon/60 to-transparent opacity-0 transition group-hover:opacity-100" />
 
         <div className="flex items-center gap-3 font-mono text-[11px] text-muted-foreground">
-          <span className="flex items-center gap-1"><Calendar className="h-3 w-3" />{date}</span>
-          <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{estimateReadTime(post.excerpt)} min read</span>
+          <span className="flex items-center gap-1">
+            <Calendar className="h-3 w-3" />
+            {date}
+          </span>
+          <span className="flex items-center gap-1">
+            <Clock className="h-3 w-3" />
+            {estimateReadTime(post.excerpt)} min read
+          </span>
         </div>
 
         <h2 className="mt-3 text-lg font-semibold tracking-tight text-foreground group-hover:text-primary">
@@ -54,7 +62,8 @@ export function WriteupCard({ post, index = 0 }: { post: WriteupSummary; index?:
                 key={t}
                 className="inline-flex items-center gap-1 rounded border border-primary/30 bg-primary/10 px-2 py-0.5 font-mono text-[10px] text-primary"
               >
-                <Hash className="h-2.5 w-2.5" />{t}
+                <Hash className="h-2.5 w-2.5" />
+                {t}
               </span>
             ))}
           </div>
