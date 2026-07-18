@@ -26,7 +26,9 @@ export type PostForm = {
 };
 
 function slugify(s: string) {
-  return s.toLowerCase().trim()
+  return s
+    .toLowerCase()
+    .trim()
     .replace(/[^a-z0-9\s-]/g, "")
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
@@ -34,9 +36,17 @@ function slugify(s: string) {
 }
 
 export function toPostForm(p: {
-  id: string; title: string; slug: string; excerpt: string | null; content: string;
-  tags: string[]; cover_image_url: string | null; status: PostStatus | string;
-  scheduled_for: string | null; is_pinned: boolean; order_index: number;
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  content: string;
+  tags: string[];
+  cover_image_url: string | null;
+  status: PostStatus | string;
+  scheduled_for: string | null;
+  is_pinned: boolean;
+  order_index: number;
 }): PostForm {
   return {
     id: p.id,
@@ -71,12 +81,14 @@ export function PostEditor({ initial, heading }: { initial: PostForm; heading: R
           slug: form.slug.trim() || slugify(form.title),
           excerpt: form.excerpt.trim() || null,
           content: form.content,
-          tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
+          tags: form.tags
+            .split(",")
+            .map((t) => t.trim())
+            .filter(Boolean),
           cover_image_url: form.cover_image_url.trim() || null,
           status: form.status,
-          scheduled_for: form.status === "scheduled"
-            ? ammanLocalToUtcISO(form.scheduled_for_local)
-            : null,
+          scheduled_for:
+            form.status === "scheduled" ? ammanLocalToUtcISO(form.scheduled_for_local) : null,
           is_pinned: form.is_pinned,
           order_index: Number(form.order_index) || 0,
         },
@@ -89,9 +101,10 @@ export function PostEditor({ initial, heading }: { initial: PostForm; heading: R
     onError: (e) => toast.error(e instanceof Error ? e.message : "Save failed"),
   });
 
-  const scheduledPreview = form.status === "scheduled" && form.scheduled_for_local
-    ? formatAmman(ammanLocalToUtcISO(form.scheduled_for_local))
-    : null;
+  const scheduledPreview =
+    form.status === "scheduled" && form.scheduled_for_local
+      ? formatAmman(ammanLocalToUtcISO(form.scheduled_for_local))
+      : null;
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10">
@@ -122,7 +135,13 @@ export function PostEditor({ initial, heading }: { initial: PostForm; heading: R
             <label className="mb-1 block font-mono text-xs text-muted-foreground">title</label>
             <input
               value={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value, slug: form.slug || slugify(e.target.value) })}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  title: e.target.value,
+                  slug: form.slug || slugify(e.target.value),
+                })
+              }
               placeholder="XSS in the wild: bypassing WAFs with Unicode"
               className="w-full rounded-md border border-border bg-card/60 px-3 py-2 text-lg font-semibold focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
@@ -139,7 +158,9 @@ export function PostEditor({ initial, heading }: { initial: PostForm; heading: R
               />
             </div>
             <div>
-              <label className="mb-1 block font-mono text-xs text-muted-foreground">tags (comma separated)</label>
+              <label className="mb-1 block font-mono text-xs text-muted-foreground">
+                tags (comma separated)
+              </label>
               <input
                 value={form.tags}
                 onChange={(e) => setForm({ ...form, tags: e.target.value })}
@@ -150,11 +171,17 @@ export function PostEditor({ initial, heading }: { initial: PostForm; heading: R
           </div>
 
           <div>
-            <label className="mb-1 block font-mono text-xs text-muted-foreground">excerpt</label>
+            <label className="mb-1 flex items-center justify-between font-mono text-xs text-muted-foreground">
+              <span>excerpt</span>
+              <span className={form.excerpt.length > 500 ? "text-red-500" : "opacity-60"}>
+                {form.excerpt.length} / 500
+              </span>
+            </label>
             <textarea
               value={form.excerpt}
               onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
               rows={2}
+              maxLength={500}
               placeholder="Short summary used on cards and social share."
               className="w-full rounded-md border border-border bg-card/60 px-3 py-2 text-sm focus:border-primary/60 focus:outline-none"
             />
@@ -221,14 +248,18 @@ export function PostEditor({ initial, heading }: { initial: PostForm; heading: R
               <Pin className="h-3.5 w-3.5" /> pin to top
             </label>
 
-            <label className="mt-3 block font-mono text-xs text-muted-foreground">order index</label>
+            <label className="mt-3 block font-mono text-xs text-muted-foreground">
+              order index
+            </label>
             <input
               type="number"
               value={form.order_index}
               onChange={(e) => setForm({ ...form, order_index: Number(e.target.value) })}
               className="mt-1 w-full rounded-md border border-border bg-background/60 px-3 py-2 font-mono text-sm focus:border-primary/60 focus:outline-none"
             />
-            <p className="mt-1 text-[11px] text-muted-foreground">Higher = shown first. Default 0.</p>
+            <p className="mt-1 text-[11px] text-muted-foreground">
+              Higher = shown first. Default 0.
+            </p>
           </div>
 
           <div className="rounded-xl border border-border bg-card/60 p-4">
@@ -240,7 +271,11 @@ export function PostEditor({ initial, heading }: { initial: PostForm; heading: R
               className="mt-2 w-full rounded-md border border-border bg-background/60 px-3 py-2 font-mono text-xs focus:border-primary/60 focus:outline-none"
             />
             {form.cover_image_url && (
-              <img src={form.cover_image_url} alt="" className="mt-3 rounded border border-border" />
+              <img
+                src={form.cover_image_url}
+                alt=""
+                className="mt-3 rounded border border-border"
+              />
             )}
           </div>
         </aside>
