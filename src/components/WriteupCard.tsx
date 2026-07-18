@@ -14,10 +14,6 @@ export type WriteupSummary = {
   published_at?: string | null;
 };
 
-function estimateReadTime(text: string | null) {
-  const words = (text ?? "").split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.round(words / 200));
-}
 
 export function WriteupCard({ post, index = 0 }: { post: WriteupSummary; index?: number }) {
   const date = new Date(post.created_at).toLocaleDateString(undefined, {
@@ -42,10 +38,6 @@ export function WriteupCard({ post, index = 0 }: { post: WriteupSummary; index?:
           <span className="flex items-center gap-1">
             <Calendar className="h-3 w-3" />
             {date}
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock className="h-3 w-3" />
-            {estimateReadTime(post.excerpt)} min read
           </span>
         </div>
 
