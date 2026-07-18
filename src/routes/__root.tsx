@@ -62,7 +62,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "google-site-verification", content: "5177d05a1786c21d" },
+      { name: "google-site-verification", content: "jYMjOUT89DRqEYLCHEwhWLe2K_I-PE4soU9cvHZl_I0" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "referrer", content: "same-origin" },
       { title: "0xmfbk.sec - Writeups" },
