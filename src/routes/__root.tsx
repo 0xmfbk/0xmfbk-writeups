@@ -61,14 +61,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "referrer", content: "same-origin" },
-      { title: "0xmfbk.sec" },
+      { title: "0xmfbk.sec - Writeups" },
       {
         name: "description",
         content:
           "Writeups, notes and tools by Mustafa Faek Banikhalaf offensive & defensive security, web pentesting, Python tooling, log analysis.",
       },
       { name: "author", content: "Mustafa Faek Banikhalaf" },
-      { property: "og:title", content: "0xmfbk.sec" },
+      { property: "og:title", content: "0xmfbk.sec - Writeups" },
       {
         property: "og:description",
         content:
@@ -77,7 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#0b1220" },
-      { name: "twitter:title", content: "0xmfbk.sec" },
+      { name: "twitter:title", content: "0xmfbk.sec - Writeups" },
       { name: "twitter:description", content: "Writeups, notes and tools by Mustafa Faek Banikhalaf offensive & defensive security, web pentesting, Python tooling, log analysis." },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0f4e4c3b-b430-4da6-affe-e7399e552990/id-preview-eb0812e9--e12f81bd-94e1-43d3-b485-9e2c6708d065.lovable.app-1784073812809.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0f4e4c3b-b430-4da6-affe-e7399e552990/id-preview-eb0812e9--e12f81bd-94e1-43d3-b485-9e2c6708d065.lovable.app-1784073812809.png" },
