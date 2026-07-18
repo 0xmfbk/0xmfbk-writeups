@@ -45,7 +45,10 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         <h1 className="mt-2 text-2xl font-bold">Something crashed.</h1>
         <p className="mt-2 text-sm text-muted-foreground">{error.message}</p>
         <button
-          onClick={() => { router.invalidate(); reset(); }}
+          onClick={() => {
+            router.invalidate();
+            reset();
+          }}
           className="mt-6 rounded-md border border-primary/40 bg-primary/10 px-4 py-2 text-sm text-primary hover:bg-primary/20"
         >
           retry
@@ -59,6 +62,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
+      { name: "google-site-verification", content: "5177d05a1786c21d" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "referrer", content: "same-origin" },
       { title: "0xmfbk.sec - Writeups" },
@@ -78,9 +82,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#0b1220" },
       { name: "twitter:title", content: "0xmfbk.sec - Writeups" },
-      { name: "twitter:description", content: "Writeups, notes and tools by Mustafa Faek Banikhalaf offensive & defensive security, web pentesting, Python tooling, log analysis." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0f4e4c3b-b430-4da6-affe-e7399e552990/id-preview-eb0812e9--e12f81bd-94e1-43d3-b485-9e2c6708d065.lovable.app-1784073812809.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0f4e4c3b-b430-4da6-affe-e7399e552990/id-preview-eb0812e9--e12f81bd-94e1-43d3-b485-9e2c6708d065.lovable.app-1784073812809.png" },
+      {
+        name: "twitter:description",
+        content:
+          "Writeups, notes and tools by Mustafa Faek Banikhalaf offensive & defensive security, web pentesting, Python tooling, log analysis.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0f4e4c3b-b430-4da6-affe-e7399e552990/id-preview-eb0812e9--e12f81bd-94e1-43d3-b485-9e2c6708d065.lovable.app-1784073812809.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0f4e4c3b-b430-4da6-affe-e7399e552990/id-preview-eb0812e9--e12f81bd-94e1-43d3-b485-9e2c6708d065.lovable.app-1784073812809.png",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
