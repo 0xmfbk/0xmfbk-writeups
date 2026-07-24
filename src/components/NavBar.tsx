@@ -95,7 +95,7 @@ export function NavBar() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -12, opacity: 0 }}
               transition={{ duration: 0.22, ease: "easeOut" }}
-              className="glass grid-bg relative mx-3 mt-3 overflow-hidden rounded-xl border border-border/70 p-3"
+              className="relative mx-3 mt-3 overflow-hidden rounded-xl border border-border/70 p-3 bg-background/99 backdrop-blur-sm"
             >
               <div className="flex flex-col gap-1 font-mono text-base">
                 <Link
