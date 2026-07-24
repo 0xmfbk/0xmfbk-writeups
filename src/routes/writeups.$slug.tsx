@@ -1,86 +1,98 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { NavBar } from "@/components/NavBar";
+// src/routes/writeups.$slug.tsx
+import { createFileRoute } from "@tanstack/react-router";
+import { motion } from "framer-motion";
+import { Calendar, Clock } from "lucide-react";
 import { Markdown } from "@/components/Markdown";
+import { ShareButton } from "@/components/ShareButton";
+import { ReadingProgress } from "@/components/ReadingProgress";
+import { TableOfContents } from "@/components/TableOfContents";
+import { BackToTop } from "@/components/BackToTop";
+import { readingTime } from "@/lib/readingTime";
 import { getPublishedPostBySlug } from "@/lib/posts.functions";
-import { ArrowLeft, Calendar, Hash } from "lucide-react";
 
 export const Route = createFileRoute("/writeups/$slug")({
-  loader: async ({ params }) => {
-    const post = await getPublishedPostBySlug({ data: { slug: params.slug } });
-    if (!post) throw notFound();
-    return post;
-  },
-  head: ({ loaderData }) => {
-    if (!loaderData) return { meta: [{ title: "Writeup — 0xmfbk" }] };
-    return {
-      meta: [
-        { title: `${loaderData.title} — 0xmfbk` },
-        { name: "description", content: loaderData.excerpt ?? loaderData.title },
-        { property: "og:title", content: loaderData.title },
-        { property: "og:description", content: loaderData.excerpt ?? "" },
-        { property: "og:type", content: "article" },
-        ...(loaderData.cover_image_url
-          ? [
-              { property: "og:image", content: loaderData.cover_image_url },
-              { name: "twitter:image", content: loaderData.cover_image_url },
-            ]
-          : []),
-      ],
-    };
-  },
-  component: PostPage,
-  notFoundComponent: () => (
-    <div className="min-h-screen">
-      <NavBar />
-      <div className="mx-auto max-w-3xl px-4 py-20 text-center font-mono">
-        <p className="text-neon">$ cat writeup.md</p>
-        <p className="mt-2 text-2xl font-bold">Writeup not found.</p>
-        <Link to="/writeups" className="mt-6 inline-block text-primary underline">← back to /writeups</Link>
-      </div>
-    </div>
+  loader: ({ params }) => getPublishedPostBySlug({ data: { slug: params.slug } }),
+  component: WriteupPage,
+  errorComponent: ({ error }) => (
+    <div className="p-10 text-center font-mono text-danger">{error.message}</div>
   ),
-  errorComponent: ({ error }) => <div className="p-10 text-center text-danger">{error.message}</div>,
+  head: ({ data }) => ({
+    meta: data
+      ? [
+          { title: data.title },
+          { name: "description", content: data.excerpt ?? "" },
+          { property: "og:title", content: data.title },
+          { property: "og:description", content: data.excerpt ?? "" },
+        ]
+      : [],
+  }),
 });
 
-function PostPage() {
+function WriteupPage() {
   const post = Route.useLoaderData();
-  const date = new Date(post.created_at).toLocaleDateString(undefined, {
-    year: "numeric", month: "long", day: "numeric",
-  });
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+
+  const date = post?.created_at
+    ? new Date(post.created_at).toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      })
+    : "";
+
+  if (!post) {
+    return (
+      <div className="flex min-h-[50vh] items-center justify-center">
+        <p className="font-mono text-lg text-muted-foreground">writeup not found.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen">
-      <NavBar />
-      <article className="mx-auto max-w-3xl px-4 py-10">
-        <Link
-          to="/writeups"
-          className="inline-flex items-center gap-1 font-mono text-xs text-muted-foreground hover:text-primary"
+    <>
+      <ReadingProgress />
+      <BackToTop />
+
+      <article className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        {/* Header */}
+        <motion.header
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-10"
         >
-          <ArrowLeft className="h-3 w-3" /> ../writeups
-        </Link>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            {post.title}
+          </h1>
 
-        <header className="mt-4">
-          <div className="flex items-center gap-3 font-mono text-xs text-muted-foreground">
-            <span className="flex items-center gap-1"><Calendar className="h-3 w-3" />{date}</span>
+          <div className="mt-4 flex flex-wrap items-center gap-4 font-mono text-xs text-muted-foreground">
+            {date && (
+              <span className="flex items-center gap-1">
+                <Calendar className="h-3 w-3" />
+                {date}
+              </span>
+            )}
+            <span className="flex items-center gap-1">
+              <Clock className="h-3 w-3" />
+              {readingTime(post.content)} min read
+            </span>
+            <ShareButton url={shareUrl} title={post.title} excerpt={post.excerpt ?? ""} />
           </div>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{post.title}</h1>
-          {post.excerpt && <p className="mt-2 text-lg text-muted-foreground">{post.excerpt}</p>}
-          {post.tags?.length ? (
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {post.tags.map((t: string) => (
-                <span key={t} className="inline-flex items-center gap-1 rounded border border-primary/30 bg-primary/10 px-2 py-0.5 font-mono text-[10px] text-primary">
-                  <Hash className="h-2.5 w-2.5" />{t}
-                </span>
-              ))}
-            </div>
-          ) : null}
-          {post.cover_image_url && (
-            <img src={post.cover_image_url} alt={post.title} className="mt-6 w-full rounded-lg border border-border" />
-          )}
-        </header>
+        </motion.header>
 
-        <hr className="my-8 border-border" />
-        <Markdown content={post.content ?? ""} />
+        {/* Content + ToC sidebar */}
+        <div className="lg:grid lg:grid-cols-[1fr_220px] lg:gap-10">
+          <div className="min-w-0">
+            <Markdown content={post.content} />
+          </div>
+
+          {/* === FIXED ToC Sidebar === */}
+          <aside className="hidden lg:block">
+            <div className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto toc-scrollbar">
+              <TableOfContents content={post.content} />
+            </div>
+          </aside>
+        </div>
       </article>
-    </div>
+    </>
   );
 }

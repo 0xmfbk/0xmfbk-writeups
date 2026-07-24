@@ -1,19 +1,28 @@
+// src/hooks/useIsMobile.ts
 import * as React from "react";
 
 const MOBILE_BREAKPOINT = 768;
 
+function canUseDOM() {
+  return typeof window !== "undefined" && typeof window.matchMedia === "function";
+}
+
 export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined);
+  // Returns false during SSR – no "undefined" flashes
+  const [isMobile, setIsMobile] = React.useState<boolean>(false);
 
   React.useEffect(() => {
+    if (!canUseDOM()) return;
+
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
-    const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-    };
-    mql.addEventListener("change", onChange);
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-    return () => mql.removeEventListener("change", onChange);
+
+    // Sync immediately (this is the only flash point, but it's minimal)
+    setIsMobile(mql.matches);
+
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
   }, []);
 
-  return !!isMobile;
+  return isMobile;
 }
